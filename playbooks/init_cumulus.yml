@@ -1,0 +1,16 @@
+---
+- hosts: '{{ target }}'
+  remote_user: '{{ remote_user }}'
+  become: yes
+  become_method: sudo
+
+  roles:
+    - init
+    - apt-cache
+    - docker
+    #- cri-o
+    - kubelet
+    - completed
+
+#  handlers:
+#    - include: "/root/ansible/handlers/all_handlers"

@@ -1,0 +1,43 @@
+---
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+    state: present
+
+- name: Add overlay module
+  modprobe:
+    name: overlay
+    state: present
+
+- name: add br_netfliter module
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Add Kubernetes APT Repo
+  shell: |
+    echo "net.bridge.bridge-nf-call-iptables = 1" > /etc/sysctl.d/99-kubernetes-cri.conf
+    echo "net.bridge.bridge-nf-call-ip6tables = 1" >> /etc/sysctl.d/99-kubernetes-cri.conf
+  args:
+    executable: /bin/bash
+
+- name: Add CRI-O Repository
+  apt_repository:
+    repo: ppa:projectatomic/ppa
+    state: present
+    update_cache: true
+
+- name: Install CRI-O
+  package:
+    name: cri-o
+    state: present
+  notify: restart cri-o
+
+- name: Ensure CRI-O is started and enabled at boot.
+  service:
+    name: crio
+    state: started
+    enabled: true

@@ -1,0 +1,5 @@
+- name: Create provisioned file
+  copy:
+    dest: /etc/netheia/provisioned
+    content: |
+      {"provisioned": "true"}

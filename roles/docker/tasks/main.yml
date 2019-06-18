@@ -1,0 +1,59 @@
+---
+- name: Ensure old verions of docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
+
+- name: Add Docker apt key.
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    state: present
+
+- name: Add Docker repository.
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower}} jessie stable"
+    state: present
+    update_cache: true
+
+- name: Install Docker
+  package:
+    name: docker-ce
+    state: present
+#  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Move dockerd to mgmt VRF (Cumulus)
+  lineinfile: dest=/etc/systemd/system/multi-user.target.wants/docker.service
+              regexp="^ExecStart=\/usr\/bin\/dockerd"
+              line="ExecStart=/usr/bin/vrf task exec mgmt /usr/bin/dockerd"
+              state=present
+  when: is_cumulus.rc == 0
+
+- name: Run systemctl daemon-reload
+  shell: |
+    set -o pipefail
+    /bin/systemctl daemon-reload
+  args:
+    executable: /bin/bash
+
+- name: Force restart dockerd (Cumulus)
+  shell: |
+    set -o pipefail
+    /bin/systemctl restart docker
+  args:
+    executable: /bin/bash

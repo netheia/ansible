@@ -1,0 +1,51 @@
+- name: Create /etc/netheia data directory
+  file:
+    path: /etc/netheia
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+
+- name: Check if Switch Provisioned
+  stat:
+    path: /etc/netheia/provisioned
+  register: netheia_provisioned
+
+- name: Exit out if provisioned
+  meta: end_play
+  when: netheia_provisioned
+
+- name: Check Switch OS
+  command: grep -q "Cumulus" /etc/os-release
+  register: is_cumulus
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
+- name: Check mgmt vrf interface (Cumulus)
+  command: grep -q "mgmt" /etc/network/interfaces
+  register: is_cumulus_mgmt_vrf
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
+- name: Set System Hostname
+  template: src=hostname.j2 dest=/etc/hostname
+  notify: Set Hostname
+
+- name: Override /etc/network/interfaces (Cumulus)
+  template: src=interfaces.j2 dest=/etc/network/interfaces
+  when: 
+    - is_cumulus.rc == 0
+    - is_cumulus_mgmt_vrf != 0
+
+- name: Force restart networking for mgmt interface (Cumulus)
+  shell: |
+    set -o pipefail
+    /sbin/ifreload -a
+  args:
+    executable: /bin/bash
+  when: 
+    - is_cumulus.rc == 0
+    - is_cumulus_mgmt_vrf != 0

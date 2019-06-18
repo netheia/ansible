@@ -1,2 +1,2 @@
 # ansible
-Repository for Ansible templates
+Repository for Ansible playbooks
