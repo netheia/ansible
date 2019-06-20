@@ -1,11 +1,13 @@
 ---
 - hosts: '{{ target }}'
-  remote_user: cumulus
+  remote_user: '{{ remote_user }}'
   become: yes
   become_method: sudo
 
   roles:
-    - openswitch-ztp
+    - apt-cache
+    - docker
+    - kubelet
 
-  handlers:
-    - include: "/root/ansible/handlers/all_handlers"
+#  handlers:
+#    - include: "/root/ansible/handlers/all_handlers"

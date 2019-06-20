@@ -1,0 +1,33 @@
+---
+- name: Add Kubernetes APT Repo Key
+  shell: |
+    set -o pipefail
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+- name: Add Kubernetes APT Repo
+  shell: |
+    cat << EOF > /etc/apt/sources.list.d/kubernetes.list
+    deb https://apt.kubernetes.io/ kubernetes-jessie main
+    EOF
+
+- name: Update APT Cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install Kube Cuddle
+  package:
+    name: kubectl
+    state: present
+  notify: restart kubelet
+
+- name: Install Kubelet
+  package:
+    name: kubelet
+    state: present
+  notify: restart kubelet
+
+- name: Ensure Kubelet is started and enabled at boot.
+  service:
+    name: kubelet
+    state: started
+    enabled: true
+
