@@ -1,0 +1,11 @@
+---
+- hosts: '{{ target }}'
+  remote_user: cumulus
+  become: yes
+  become_method: sudo
+
+  roles:
+    - openswitch-ztp
+
+  handlers:
+    - include: "/root/ansible/handlers/all_handlers"
