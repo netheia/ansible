@@ -3,15 +3,18 @@
   shell: |
     set -o pipefail
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+  args:
+    executable: /bin/bash
 
 - name: Add Kubernetes APT Repo
   shell: |
-    cat << EOF > /etc/apt/sources.list.d/kubernetes.list
-    deb https://apt.kubernetes.io/ kubernetes-jessie main
-    EOF
+    set -o pipefail
+    echo "deb https://apt.kubernetes.io/ kubernetes-jessie main" > /etc/apt/sources.list.d/kubernetes.list
+  args:
+    executable: /bin/bash
 
 - name: Update APT Cache
-  apt: update_cache=yes cache_valid_time=3600
+  apt: update_cache=yes
 
 - name: Install Kube Cuddle
   package:
