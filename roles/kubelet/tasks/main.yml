@@ -9,7 +9,7 @@
 - name: Add Kubernetes APT Repo
   shell: |
     set -o pipefail
-    echo "deb https://apt.kubernetes.io/ kubernetes-jessie main" > /etc/apt/sources.list.d/kubernetes.list
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
   args:
     executable: /bin/bash
 

@@ -6,7 +6,8 @@
 
   roles:
     - apt-cache
-    - docker
+    #- docker
+    - cri-o
     - kubelet
 
 #  handlers:

@@ -1,3 +1,8 @@
 ---
+- name: Add Debian Jessie Contrib APT Repo
+  apt_repository:
+    repo: deb http://ftp.us.debian.org/debian/ jessie main contrib non-free
+    state: present
+
 - name: Update APT Cache
   apt: update_cache=yes cache_valid_time=3600
