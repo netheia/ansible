@@ -16,17 +16,20 @@
 - name: Update APT Cache
   apt: update_cache=yes
 
+- name: Install Kube ADM
+  package:
+    name: kubeadm
+    state: present
+
 - name: Install Kube Cuddle
   package:
     name: kubectl
     state: present
-  notify: restart kubelet
 
 - name: Install Kubelet
   package:
     name: kubelet
     state: present
-  notify: restart kubelet
 
 - name: Ensure Kubelet is started and enabled at boot.
   service:
@@ -34,3 +37,9 @@
     state: started
     enabled: true
 
+- name: Join kubernetes cluster. 
+  shell: |
+    set -o pipefail
+    kubeadm join {{ kubernetes_cluster_api_ip }}:6443 --token {{ kubernetes_token }} --discovery-token-ca-cert-hash {{ kubernetes_ca_cert_hash }} --name {{ target }}
+  args:
+    executable: /bin/bash
