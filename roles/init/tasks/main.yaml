@@ -14,7 +14,7 @@
   when: is_cumulus.rc == 0
 
 - name: Force restart networking for mgmt interface (Cumulus)
-shell: |
+  shell: |
     set -o pipefail
     /bin/systemctl restart networking
   args:
