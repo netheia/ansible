@@ -1,5 +1,5 @@
 - name: Check Switch OS
-  command: grep -Fxq "Cumulus" /etc/os-release
+  command: grep -q "Cumulus" /etc/os-release
   register: is_cumulus
   check_mode: no
   ignore_errors: yes
