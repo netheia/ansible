@@ -3,3 +3,9 @@
     dest: /root/COMPLETED
     content: |
       true
+
+- name: Create COMPLETED file (2)
+  copy:
+    dest: /root/scratch/COMPLETED
+    content: |
+      true
