@@ -40,6 +40,13 @@
 - name: Copy /etc/default/kubelet
   template: src=kubelet.j2 dest=/etc/default/kubelet
 
+- name: Move kubelet to mgmt VRF (Cumulus)
+  lineinfile: dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+              regexp="^ExecStart=\/usr\/bin\/kubelet"
+              line="/usr/bin/vrf task exec mgmt /usr/bin/kubelet"
+              state=present
+  when: is_cumulus.rc == 0
+
 - name: Join kubernetes cluster. 
   shell: |
     set -o pipefail

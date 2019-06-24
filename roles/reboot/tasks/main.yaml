@@ -1,0 +1,6 @@
+- name: Reboot Node
+  shell: |
+    set -o pipefail
+    /sbin/shutdown -r now
+  args:
+    executable: /bin/bash

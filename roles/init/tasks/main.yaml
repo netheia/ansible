@@ -1,3 +1,22 @@
+- name: Check Switch OS
+  command: grep -Fxq "Cumulus" /etc/os-release
+  register: is_cumulus
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
 - name: Set System Hostname
   template: src=hostname.j2 dest=/etc/hostname
   notify: Set Hostname
+
+- name: Override /etc/network/interfaces (Cumulus)
+  template: src=interfaces.j2 dest=/etc/network/interfaces
+  when: is_cumulus.rc == 0
+
+- name: Force restart networking for mgmt interface (Cumulus)
+shell: |
+    set -o pipefail
+    /bin/systemctl restart networking
+  args:
+    executable: /bin/bash
+  when: is_cumulus.rc == 0

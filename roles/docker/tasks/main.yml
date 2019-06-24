@@ -36,3 +36,18 @@
     name: docker
     state: started
     enabled: true
+
+- name: Move dockerd to mgmt VRF (Cumulus)
+  lineinfile: dest=/etc/systemd/system/multi-user.target.wants/docker.service
+              regexp="^ExecStart=\/usr\/bin\/dockerd"
+              line="ExecStart=/usr/bin/vrf task exec mgmt /usr/bin/dockerd"
+              state=present
+  when: is_cumulus.rc == 0
+
+- name: Force restart dockerd (Cumulus)
+  shell: |
+    set -o pipefail
+    /bin/systemctl restart docker
+  args:
+    executable: /bin/bash
+
