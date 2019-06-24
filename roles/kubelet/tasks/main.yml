@@ -43,6 +43,6 @@
 - name: Join kubernetes cluster. 
   shell: |
     set -o pipefail
-    kubeadm join {{ kubernetes_cluster_api_ip }}:6443 --token {{ kubernetes_token }} --discovery-token-ca-cert-hash {{ kubernetes_ca_cert_hash }} --node-name {{ target }}
+    kubeadm join {{ kubernetes_cluster_api_ip }}:6443 --token {{ kubernetes_token }} --discovery-token-ca-cert-hash {{ kubernetes_ca_cert_hash }} --node-name {{ target }} --ignore-preflight-errors=all
   args:
     executable: /bin/bash
