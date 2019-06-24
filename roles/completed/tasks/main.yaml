@@ -1,4 +1,4 @@
 - name: Create COMPLETED file
   file:
-    path: /root/ansible/COMPLETED
+    path: /root/scratch/COMPLETED
     state: touch
