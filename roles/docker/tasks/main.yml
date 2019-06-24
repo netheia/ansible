@@ -29,7 +29,7 @@
   package:
     name: docker-ce
     state: present
-  notify: restart docker
+#  notify: restart docker
 
 - name: Ensure Docker is started and enabled at boot.
   service:
