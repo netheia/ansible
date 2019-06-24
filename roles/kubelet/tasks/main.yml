@@ -40,16 +40,16 @@
 - name: Copy /etc/default/kubelet
   template: src=kubelet.j2 dest=/etc/default/kubelet
 
-- name: Move kubelet to mgmt VRF (Cumulus)
-  lineinfile: dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-              regexp="^ExecStart=\/usr\/bin\/kubelet"
-              line="/usr/bin/vrf task exec mgmt /usr/bin/kubelet"
-              state=present
-  when: is_cumulus.rc == 0
+#- name: Move kubelet to mgmt VRF (Cumulus)
+#  lineinfile: dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+#              regexp="^ExecStart=\/usr\/bin\/kubelet"
+#              line="/usr/bin/vrf task exec mgmt /usr/bin/kubelet"
+#              state=present
+#  when: is_cumulus.rc == 0
 
-- name: Join kubernetes cluster. 
-  shell: |
-    set -o pipefail
-    kubeadm join {{ kubernetes_cluster_api_ip }}:6443 --token {{ kubernetes_token }} --discovery-token-ca-cert-hash {{ kubernetes_ca_cert_hash }} --node-name {{ target }} --ignore-preflight-errors=all
-  args:
-    executable: /bin/bash
+#- name: Join kubernetes cluster. 
+#  shell: |
+#    set -o pipefail
+#    kubeadm join {{ kubernetes_cluster_api_ip }}:6443 --token {{ kubernetes_token }} --discovery-token-ca-cert-hash {{ kubernetes_ca_cert_hash }} --node-name {{ target }} --ignore-preflight-errors=all
+#  args:
+#    executable: /bin/bash
