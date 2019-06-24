@@ -1,0 +1,4 @@
+- name: Create COMPLETED file
+  file:
+    path: /root/ansible/COMPLETED
+    state: touch
