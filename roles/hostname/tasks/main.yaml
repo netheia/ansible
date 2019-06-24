@@ -1,3 +1,0 @@
-- name: Set System Hostname
-  template: src=hostname.j2 dest=/etc/hostname
-  notify: Set Hostname

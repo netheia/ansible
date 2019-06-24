@@ -1,2 +1,0 @@
-- name: Set Hostname
-  command: /bin/hostname {{ DEVICE_NAME }}
