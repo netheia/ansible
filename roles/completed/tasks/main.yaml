@@ -1,4 +1,5 @@
 - name: Create COMPLETED file
-  file:
-    path: /root/scratch/COMPLETED
-    state: touch
+  copy:
+    dest: /root/COMPLETED
+    content: |
+      true
