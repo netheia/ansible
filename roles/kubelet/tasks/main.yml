@@ -43,6 +43,13 @@
 - name: Move kubelet to mgmt VRF (Cumulus)
   template: src=10-kubeadm.conf.j2 dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
+- name: Run systemctl daemon-reload
+  shell: |
+    set -o pipefail
+    /bin/systemctl daemon-reload
+  args:
+    executable: /bin/bash
+
 - name: Join kubernetes cluster. 
   shell: |
     set -o pipefail
