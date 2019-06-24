@@ -25,7 +25,7 @@
 - name: Force restart networking for mgmt interface (Cumulus)
   shell: |
     set -o pipefail
-    /bin/systemctl restart networking
+    /sbin/ifreload -a
   args:
     executable: /bin/bash
   when: 
