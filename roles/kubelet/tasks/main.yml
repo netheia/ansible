@@ -41,10 +41,6 @@
   template: src=kubelet.j2 dest=/etc/default/kubelet
 
 - name: Move kubelet to mgmt VRF (Cumulus)
-  lineinfile: dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-              regexp="^ExecStart=\/usr\/bin\/kubelet"
-              line="/usr/bin/vrf task exec mgmt /usr/bin/kubelet"
-              state=present
   template: src=10-kubeadm.conf.j2 dest=/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 - name: Join kubernetes cluster. 
