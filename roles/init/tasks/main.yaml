@@ -3,7 +3,8 @@
     path: /root/provisioned
   register: netheia_provisioned
 
-- meta: Exit out if provisioned
+- name: Exit out if provisioned
+  meta: end_play
   when: netheia_provisioned
 
 - name: Check Switch OS
