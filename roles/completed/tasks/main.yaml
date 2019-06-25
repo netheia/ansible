@@ -1,11 +1,5 @@
-- name: Create COMPLETED file
+- name: Create provisioned file
   copy:
-    dest: /root/COMPLETED
+    dest: /root/provisioned
     content: |
-      true
-
-- name: Create COMPLETED file (2)
-  copy:
-    dest: /root/scratch/COMPLETED
-    content: |
-      true
+      {"provisioned": "true"}

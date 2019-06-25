@@ -1,3 +1,11 @@
+- name: Check if Switch Provisioned
+  stat:
+    path: /root/provisioned
+  register: netheia_provisioned
+
+- meta: Exit out if provisioned
+  when: netheia_provisioned
+
 - name: Check Switch OS
   command: grep -q "Cumulus" /etc/os-release
   register: is_cumulus

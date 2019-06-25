@@ -10,7 +10,7 @@
     - docker
     #- cri-o
     - kubelet
-    #- completed
+    - completed
 
 #  handlers:
 #    - include: "/root/ansible/handlers/all_handlers"
