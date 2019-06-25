@@ -44,10 +44,16 @@
               state=present
   when: is_cumulus.rc == 0
 
+- name: Run systemctl daemon-reload
+  shell: |
+    set -o pipefail
+    /bin/systemctl daemon-reload
+  args:
+    executable: /bin/bash
+
 - name: Force restart dockerd (Cumulus)
   shell: |
     set -o pipefail
     /bin/systemctl restart docker
   args:
     executable: /bin/bash
-
