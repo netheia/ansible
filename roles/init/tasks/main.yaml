@@ -1,6 +1,15 @@
+- name: Create /etc/netheia data directory
+  file:
+    path: /etc/netheia
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+
 - name: Check if Switch Provisioned
   stat:
-    path: /root/provisioned
+    path: /etc/netheia/provisioned
   register: netheia_provisioned
 
 - name: Exit out if provisioned
