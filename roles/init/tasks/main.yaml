@@ -14,7 +14,7 @@
 
 - name: Exit out if provisioned
   meta: end_play
-  when: netheia_provisioned
+  when: netheia_provisioned.stat.exists
 
 - name: Check Switch OS
   command: grep -q "Cumulus" /etc/os-release
