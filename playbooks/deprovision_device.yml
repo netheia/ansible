@@ -1,0 +1,10 @@
+---
+- hosts: '{{ target }}'
+  remote_user: '{{ remote_user }}'
+  become: yes
+  become_method: sudo
+
+  roles:
+    - remove-docker
+    - remove-kubelet
+    - deprovisioned

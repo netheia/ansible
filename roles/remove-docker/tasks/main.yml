@@ -1,0 +1,15 @@
+---
+- name: Force stop dockerd (Cumulus)
+  shell: |
+    set -o pipefail
+    /bin/systemctl stop docker
+  args:
+    executable: /bin/bash
+
+- name: Ensure old verions of docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-engine
+      - docker-ce
+    state: absent

@@ -1,0 +1,22 @@
+---
+- name: Force stop kubelet
+  shell: |
+    set -o pipefail
+    /bin/systemctl stop kubelet
+  args:
+    executable: /bin/bash
+
+- name: Ensure Kubernetes packages are not installed.
+  package:
+    name:
+      - kubeadm
+      - kubectl
+      - kubelet
+    state: absent
+
+- name: Run systemctl daemon-reload
+  shell: |
+    set -o pipefail
+    /bin/systemctl daemon-reload
+  args:
+    executable: /bin/bash

@@ -1,0 +1,4 @@
+- name: Remove provisioned file
+  file:
+    path: /etc/netheia/provisioned
+    state: absent
