@@ -1,4 +1,4 @@
-- name: Remove provisioned file
+- name: Remove /etc/netheia directory
   file:
-    path: /etc/netheia/provisioned
+    path: /etc/netheia/
     state: absent
