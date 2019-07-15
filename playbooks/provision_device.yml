@@ -7,7 +7,7 @@
   roles:
     - init
     - apt-cache
+    - enable-routing
     - docker
-    #- cri-o
     - kubelet
     - provisioned
