@@ -1,0 +1,17 @@
+- name: Check FRR
+  shell:
+    set -o pipefail
+    [[ -z $(vtysh -f /etc/frr/frr.conf --dryrun) ]]
+  args:
+    executable: /bin/bash
+
+- name: Restart FRR
+  service: name=frr state=restarted
+
+- name: Reload FRR
+  service: name=frr state=restarted
+
+- name: Enable FRR
+  service: name=frr state started enabled=yes
+
+

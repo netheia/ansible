@@ -1,0 +1,6 @@
+- name: Enable Zebra and BGP by default in /etc/frr/daemons
+  template: src=daemons.j2 dest=/etc/frr/daemons
+  notify:
+    - Check FRR
+    - Enable FRR
+    - Restart FRR
