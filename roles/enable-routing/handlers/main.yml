@@ -12,6 +12,6 @@
   service: name=frr state=restarted
 
 - name: Enable FRR
-  service: name=frr state started enabled=yes
+  service: name=frr state=started enabled=yes
 
 
