@@ -3,3 +3,11 @@
     dest: /etc/netheia/provisioned
     content: |
       {"provisioned": "true"}
+  when: provision_mode == "provision_device"
+
+- name: Create cloud provisioned file
+  copy:
+    dest: /etc/netheia/cloud_provisioned
+    content: |
+      {"cloud_provisioned": "true"}
+  when: provision_mode == "cloud_provision_device"

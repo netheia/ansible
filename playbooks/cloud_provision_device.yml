@@ -1,0 +1,11 @@
+---
+- hosts: '{{ target }}'
+  remote_user: '{{ remote_user }}'
+  become: yes
+  become_method: sudo
+
+  roles:
+    - nameservers
+    # - ntp_servers
+    # - dhcp_proxy
+    # - vrfs
