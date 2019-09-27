@@ -10,5 +10,5 @@
     - enable-routing
     - docker
     - kubelet
-    - switchd
+    - nswitchd
     - provisioned

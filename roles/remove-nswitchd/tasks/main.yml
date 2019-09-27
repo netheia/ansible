@@ -2,14 +2,14 @@
 - name: Force stop Netheia switchd
   shell: |
     set -o pipefail
-    /bin/systemctl stop switchd
+    /bin/systemctl stop nswitchd
   args:
     executable: /bin/bash
 
 - name: Remove Netheia switchd system unit
   file:
     state: absent
-    path: /etc/systemd/system/switchd.service
+    path: /etc/systemd/system/nswitchd.service
 
 - name: Run systemctl daemon-reload
   shell: |

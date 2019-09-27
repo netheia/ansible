@@ -1,0 +1,15 @@
+[Unit]
+Description=nswitchd.service
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm -f nswitchd
+ExecStart=/usr/bin/docker run --rm --net=host \
+ --name=nswitchd \
+ {{ docker_registry }}/nswitchd:v{{ switchd_version }}
+
+ExecStop=-/usr/bin/docker stop nswitchd
+
+[Install]
+WantedBy=multi-user.target
