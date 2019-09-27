@@ -5,6 +5,7 @@
   become_method: sudo
 
   roles:
+    - remove-switchd
     - remove-docker
     - remove-kubelet
     - deprovisioned

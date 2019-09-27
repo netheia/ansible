@@ -1,0 +1,15 @@
+- name: Copy Netheia switchd system unit
+  template: src=switchd.service.j2 dest=/etc/systemd/system/switchd.service
+
+- name: Run systemctl daemon-reload
+  shell: |
+    set -o pipefail
+    /bin/systemctl daemon-reload
+  args:
+    executable: /bin/bash
+
+- name: Ensure Netheia switchd is started and enabled at boot.
+  service:
+    name: switchd
+    state: started
+    enabled: true

@@ -1,0 +1,15 @@
+[Unit]
+Description=switchd.service
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm -f switchd
+ExecStart=/usr/bin/docker run --rm --net=host \
+ --name=switchd \
+ {{ docker_registry }}/switchd:v{{ switchd_version }}
+
+ExecStop=-/usr/bin/docker stop switchd
+
+[Install]
+WantedBy=multi-user.target
